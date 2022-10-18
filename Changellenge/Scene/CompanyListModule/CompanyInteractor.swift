@@ -32,20 +32,24 @@ class CompanyInteractor: CompanyBusinessLogic, CompanyDataStore {
     
     func fetchBackendCompany(request: CompanyModels.Request) {
         fetchCompany(stringURL: Configuration.baseURL) { [weak self] recievedCompany in
-            guard let self = self, let company = self.company else { return }
+            guard let self = self else { return }
             self.company = recievedCompany
-            let response = CompanyModels.Response(company: company)
-            self.presenter?.presentFetchedCompany(response: response)
+            if let company = self.company {
+                let response = CompanyModels.Response(company: company)
+                self.presenter?.presentFetchedCompany(response: response)
+            } else {
+                self.presenter?.presentInternetConnectionAlert()
+            }
         }
     }
     
-    private func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo) -> Void) {
-        companyService?.fetchCompany(stringURL: Configuration.baseURL, completion: { [weak self] result in
-            guard let self = self else { return }
-            self.company = try? result.get()
-            guard let company = self.company else { return }
-            let response = CompanyModels.Response(company: company)
-            self.presenter?.presentFetchedCompany(response: response)
+    private func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo?) -> Void) {
+        companyService?.fetchCompany(stringURL: Configuration.baseURL, completion: { result in
+            if let company = try? result.get() {
+                completion(company)
+            } else {
+                completion(nil)
+            }
         })
     }
     

@@ -8,8 +8,9 @@
 import UIKit
 import SnapKit
 
-protocol CompanyDisplayLogic: AnyObject{
+protocol CompanyDisplayLogic: AnyObject {
     func displayFetchedCompany(displayData: CompanyModels.ViewModel)
+    func displayInternetProblemsAlert()
 }
 
 final class CompanyViewController: UIViewController, CompanyDisplayLogic {
@@ -26,6 +27,12 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
         let table = UITableView()
         table.register(CompanyTableViewCell.self, forCellReuseIdentifier: "cell")
         return table
+    }()
+    
+    let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(nil, action: #selector(refreshTableView(sender:)), for: .valueChanged)
+        return refreshControl
     }()
     
     //MARK: - Init
@@ -53,13 +60,19 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
         fetchCompany()
     }
     
-    // MARK: - Update table view fucntion
+    // MARK: - Display functions
         
     func displayFetchedCompany(displayData: CompanyModels.ViewModel) {
         company = displayData
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    func displayInternetProblemsAlert() {
+        let alert = UIAlertController(title: "Internet connection Problems", message: "Something happend with your internet connection. Refresh your table", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true)
     }
     
     // MARK: - Private functions
@@ -76,10 +89,16 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        tableView.refreshControl = refreshControl
         tableView.dataSource = self
         tableView.delegate = self
     }
         
+    @objc private func refreshTableView(sender: UIRefreshControl) {
+        fetchCompany()
+        tableView.refreshControl?.endRefreshing()
+    }
+    
 }
 
 // MARK: - UITableViewDataSource & UItableViewDelegate

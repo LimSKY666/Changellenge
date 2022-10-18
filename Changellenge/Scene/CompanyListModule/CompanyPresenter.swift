@@ -9,10 +9,11 @@ import UIKit
 
 protocol CompanyPresentationLogic {
     func presentFetchedCompany(response: CompanyModels.Response)
+    func presentInternetConnectionAlert()
 }
 
 class CompanyPresenter: CompanyPresentationLogic {
-    
+   
     // MARK: - Property
     
     weak var companyViewController: CompanyDisplayLogic?
@@ -28,6 +29,12 @@ class CompanyPresenter: CompanyPresentationLogic {
         companyViewController?.displayFetchedCompany(displayData: displayData)
     }
     
+    func presentInternetConnectionAlert() {
+        DispatchQueue.main.async {
+            self.companyViewController?.displayInternetProblemsAlert()
+        }
+    }
+        
     private func skillsToString(skills: [String]) -> String {
         var stringSkills = ""
         skills.enumerated().forEach {
