@@ -23,6 +23,11 @@ class CompanyInteractor: CompanyBusinessLogic, CompanyDataStore {
     var company: CompanyInfo?
     var companyService: CompanyService?
     
+    init(presenter: CompanyPresentationLogic, companyService: CompanyService) {
+        self.presenter = presenter
+        self.companyService = companyService
+    }
+    
     //MARK: - Fetch company
     
     func fetchBackendCompany(request: CompanyModels.Request) {
@@ -35,14 +40,10 @@ class CompanyInteractor: CompanyBusinessLogic, CompanyDataStore {
         }
     }
     
-    private func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo?) -> Void) {
+    private func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo) -> Void) {
         companyService?.fetchCompany(stringURL: stringURL, completion: {
             company, error in
-            if let company = company {
-                completion(company)
-            } else if let error = error {
-                print(error)
-            }
+            completion(company)
         })
     }
     

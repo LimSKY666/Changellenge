@@ -13,8 +13,10 @@ protocol CompanyParser {
 
 struct DefaultCompanyParser: CompanyParser {
     
+    let jsonDecoder = JSONDecoder()
+    
     func parseCompany(data: Data) -> CompanyInfo? {
-        let company = try? JSONDecoder().decode(Company.self, from: data)
+        let company = try? jsonDecoder.decode(Company.self, from: data)
         guard let recievedCompany = company else { return nil }
         
         return recievedCompany.company

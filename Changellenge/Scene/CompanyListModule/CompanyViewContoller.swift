@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol CompanyDisplayLogic: AnyObject{
-    func displayFetchedCompany(viewModel: CompanyModels.ViewModel)
+    func displayFetchedCompany(displayData: CompanyModels.ViewModel)
 }
 
 final class CompanyViewController: UIViewController, CompanyDisplayLogic {
@@ -29,6 +29,18 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
         return table
     }()
     
+    //MARK: - Init
+    
+    init(interactor: CompanyBusinessLogic, router: (CompanyRoutingLogic & CompanyDataPassing)) {
+        self.interactor = interactor
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - View life cycle
     
     override func loadView() {
@@ -38,17 +50,13 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         fetchCompany()
     }
     
     // MARK: - Update table view fucntion
         
-    func displayFetchedCompany(viewModel: CompanyModels.ViewModel) {
-        company = viewModel
+    func displayFetchedCompany(displayData: CompanyModels.ViewModel) {
+        company = displayData
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -90,7 +98,7 @@ extension CompanyViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let displayCompany = company?.employees[indexPath.row] else { return UITableViewCell() }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CompanyTableViewCell else { return UITableViewCell() }
-        cell.configureCellData(viewModel: displayCompany)
+        cell.configureCellData(displayData: displayCompany)
         return cell
     }
     

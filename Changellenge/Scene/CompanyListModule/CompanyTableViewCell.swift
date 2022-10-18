@@ -30,10 +30,10 @@ class CompanyTableViewCell: UITableViewCell {
     
     //MARK: - Configure cell fucntion
     
-    func configureCellData(viewModel: CompanyModels.ViewModel.DisplayedEmployees) {
-        emloyeeNameLabel.text = viewModel.name
-        employeeSkillsLabel.text = skillsToString(skills: viewModel.skills)
-        phoneNumberLabel.text = "Phone number: \(viewModel.phoneNumber)"
+    func configureCellData(displayData: CompanyModels.ViewModel.DisplayedEmployees) {
+        emloyeeNameLabel.text = displayData.name
+        employeeSkillsLabel.text = skillsToString(skills: displayData.skills)
+        phoneNumberLabel.text = "Phone number: \(displayData.phoneNumber)"
     }
     
     // MARK: - Private functions
@@ -46,7 +46,7 @@ class CompanyTableViewCell: UITableViewCell {
     
     private func configureEmployeeNameLabel() {
         addSubview(emloyeeNameLabel)
-        emloyeeNameLabel.font = UIFont(name: "Helvetica", size: 17)
+        emloyeeNameLabel.font = UIFont(name: "Helvetica", size: 22)
         emloyeeNameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.top.equalToSuperview().inset(8)
@@ -56,7 +56,7 @@ class CompanyTableViewCell: UITableViewCell {
     
     private func configurePhoneNumberLabel() {
         addSubview(phoneNumberLabel)
-        phoneNumberLabel.font = UIFont(name: "Helvetica", size: 13)
+        phoneNumberLabel.font = UIFont(name: "Helvetica", size: 17)
         phoneNumberLabel.snp.makeConstraints { make in
             make.top.equalTo(emloyeeNameLabel).inset(20)
             make.bottom.equalToSuperview().inset(8)
@@ -66,11 +66,12 @@ class CompanyTableViewCell: UITableViewCell {
     
     private func configureEmployeeSkillsLabel() {
         addSubview(employeeSkillsLabel)
-        employeeSkillsLabel.font = UIFont(name: "Helvetica", size: 13)
+        employeeSkillsLabel.font = UIFont(name: "Helvetica", size: 17)
         employeeSkillsLabel.numberOfLines = 0
         employeeSkillsLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(8)
-            make.leading.greaterThanOrEqualTo(phoneNumberLabel).inset(200)
+            make.top.equalToSuperview().inset(8)
+            make.leading.greaterThanOrEqualTo(phoneNumberLabel.snp.leading).inset(210)
             make.bottom.equalToSuperview().inset(8)
         }
     }

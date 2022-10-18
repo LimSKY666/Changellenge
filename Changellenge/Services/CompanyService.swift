@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CompanyService {
-    func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo?, Error?) -> Void)
+    func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo, Error) -> Void)
 }
 
 struct DefaultCompanyService: CompanyService {
@@ -20,14 +20,14 @@ struct DefaultCompanyService: CompanyService {
     
     //MARK: - Fetch company
     
-    func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo?, Error?) -> Void) {
+    func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo, Error) -> Void) {
         if let url = URL(string: stringURL) {
             let session = URLSession(configuration: self.configuration)
             var request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData)
             request.httpMethod = "GET"
             session.dataTask(with: request) { data, response, error in
                 if let error = error {
-                    completion(nil, error)
+                    completion(CompanyInfo(), error)
                 } else if let data = data {
                     completion(companyParser.parseCompany(data: data), nil)
                 }

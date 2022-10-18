@@ -17,15 +17,11 @@ struct DefaultCompanyAssembly: CompanyAssembly {
     func assemble() -> UIViewController {
         let companyParser = DefaultCompanyParser()
         let companyService = DefaultCompanyService(companyParser: companyParser)
-        let viewController = CompanyViewController()
-        let interactor = CompanyInteractor()
         let presenter = CompanyPresenter()
         let router = CompanyRouter()
-        viewController.interactor = interactor
-        viewController.router = router
+        let interactor = CompanyInteractor(presenter: presenter, companyService: companyService)
+        let viewController = CompanyViewController(interactor: interactor, router: router)
         presenter.companyViewController = viewController
-        interactor.presenter = presenter
-        interactor.companyService = companyService
         router.dataStore = interactor
         router.viewController = viewController
         return viewController
