@@ -43,6 +43,7 @@ class CompanyInteractor: CompanyBusinessLogic, CompanyDataStore {
     private func fetchCompany(stringURL: String, completion: @escaping (CompanyInfo) -> Void) {
         companyService?.fetchCompany(stringURL: stringURL, completion: {
             company, error in
+            guard let company = company else { return }
             completion(company)
         })
     }

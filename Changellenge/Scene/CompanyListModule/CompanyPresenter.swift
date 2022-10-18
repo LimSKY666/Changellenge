@@ -25,8 +25,8 @@ class CompanyPresenter: CompanyPresentationLogic {
             displayedEmployees.append(displayEmployee)
         }
         
-        let viewModel = CompanyModels.ViewModel(name: response.company.name, employees: displayedEmployees)
-        companyViewController?.displayFetchedCompany(viewModel: viewModel)
+        let displayData = CompanyModels.ViewModel(name: response.company.name, employees: displayedEmployees)
+        companyViewController?.displayFetchedCompany(displayData: displayData)
     }
     
 }
