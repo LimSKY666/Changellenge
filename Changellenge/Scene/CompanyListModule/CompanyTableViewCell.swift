@@ -24,6 +24,7 @@ class CompanyTableViewCell: UITableViewCell {
         configure()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,7 +33,7 @@ class CompanyTableViewCell: UITableViewCell {
     
     func configureCellData(displayData: CompanyModels.ViewModel.DisplayedEmployees) {
         emloyeeNameLabel.text = displayData.name
-        employeeSkillsLabel.text = skillsToString(skills: displayData.skills)
+        employeeSkillsLabel.text = displayData.skills
         phoneNumberLabel.text = "Phone number: \(displayData.phoneNumber)"
     }
     
@@ -51,7 +52,6 @@ class CompanyTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().inset(16)
             make.top.equalToSuperview().inset(8)
         }
-        
     }
     
     private func configurePhoneNumberLabel() {
@@ -74,15 +74,6 @@ class CompanyTableViewCell: UITableViewCell {
             make.leading.greaterThanOrEqualTo(phoneNumberLabel.snp.leading).inset(210)
             make.bottom.equalToSuperview().inset(8)
         }
-    }
-    
-    private func skillsToString(skills: [String]) -> String {
-        var stringSkills = ""
-        for i in 0..<skills.count {
-            i == skills.count - 1 ? (stringSkills += "\(skills[i])") : (stringSkills += "\(skills[i]), ")
-        }
-    
-        return stringSkills
     }
     
 }

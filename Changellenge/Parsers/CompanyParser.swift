@@ -17,9 +17,8 @@ struct DefaultCompanyParser: CompanyParser {
     
     func parseCompany(data: Data) -> CompanyInfo? {
         let company = try? jsonDecoder.decode(Company.self, from: data)
-        guard let recievedCompany = company else { return nil }
-        
-        return recievedCompany.company
+        guard let parsedCompany = company else { return nil }
+        return parsedCompany.company
     }
     
 }

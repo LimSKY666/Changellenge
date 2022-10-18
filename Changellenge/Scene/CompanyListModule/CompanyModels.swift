@@ -22,7 +22,7 @@ enum CompanyModels {
         struct DisplayedEmployees {
             var name: String
             var phoneNumber: String
-            var skills: [String]
+            var skills: String
         }
         
         var name: String

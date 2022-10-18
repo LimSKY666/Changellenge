@@ -5,7 +5,6 @@
 //  Created by Семён Соколов on 18.10.2022.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
@@ -37,6 +36,7 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

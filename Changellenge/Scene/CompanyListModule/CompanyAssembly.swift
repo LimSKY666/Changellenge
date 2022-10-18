@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 protocol CompanyAssembly {
-    func assemble() -> UIViewController
+    func assemble(window: UIWindow) -> UIViewController
 }
 
 struct DefaultCompanyAssembly: CompanyAssembly {
     
-    func assemble() -> UIViewController {
+    func assemble(window: UIWindow) -> UIViewController {
         let companyParser = DefaultCompanyParser()
         let companyService = DefaultCompanyService(companyParser: companyParser)
         let presenter = CompanyPresenter()
@@ -24,6 +24,7 @@ struct DefaultCompanyAssembly: CompanyAssembly {
         presenter.companyViewController = viewController
         router.dataStore = interactor
         router.viewController = viewController
+        window.makeKeyAndVisible()
         return viewController
     }
     
