@@ -58,7 +58,7 @@ class CompanyTableViewCell: UITableViewCell {
         addSubview(phoneNumberLabel)
         phoneNumberLabel.font = UIFont(name: "Helvetica", size: 13)
         phoneNumberLabel.snp.makeConstraints { make in
-            make.top.equalTo(emloyeeNameLabel).inset(16)
+            make.top.equalTo(emloyeeNameLabel).inset(20)
             make.bottom.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(16)
         }
