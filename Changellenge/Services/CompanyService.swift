@@ -18,7 +18,7 @@ struct DefaultCompanyService: CompanyService {
     private let configuration = URLSessionConfiguration.default
     private let cache = URLCache.shared
     private let usedDefault = UserDefaults.standard
-    private let companyParser: CompanyParser
+    let companyParser: CompanyParser
     
         
     //MARK: - Fetch company
@@ -28,7 +28,6 @@ struct DefaultCompanyService: CompanyService {
             let session = URLSession(configuration: self.configuration)
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
-            request.cachePolicy = .reloadIgnoringLocalCacheData
             
             if let savedData = cache.cachedResponse(for: request)?.data {
                 var result: Result<CompanyInfo?, Error>
