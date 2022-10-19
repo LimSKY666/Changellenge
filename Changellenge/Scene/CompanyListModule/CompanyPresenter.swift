@@ -18,6 +18,8 @@ class CompanyPresenter: CompanyPresentationLogic {
     
     weak var companyViewController: CompanyDisplayLogic?
     
+    // MARK: - Fucntion
+    
     func presentFetchedCompany(response: CompanyModels.Response) {
         var displayedEmployees: [CompanyModels.ViewModel.DisplayedEmployees] = []
         for employee in response.company.employees.sorted(by: { $0.name < $1.name } ) {
@@ -34,7 +36,9 @@ class CompanyPresenter: CompanyPresentationLogic {
             self.companyViewController?.displayInternetProblemsAlert()
         }
     }
-        
+    
+    //MARK: - Private function
+    
     private func skillsToString(skills: [String]) -> String {
         var stringSkills = ""
         skills.enumerated().forEach {

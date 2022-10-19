@@ -70,8 +70,8 @@ final class CompanyViewController: UIViewController, CompanyDisplayLogic {
     }
     
     func displayInternetProblemsAlert() {
-        let alert = UIAlertController(title: "Internet connection Problems", message: "Something happend with your internet connection. Refresh your table", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: nil))
+        let alert = UIAlertController(title: "Internet connection problems", message: "Something happend with your internet connection. Try refresh your table", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true)
     }
     

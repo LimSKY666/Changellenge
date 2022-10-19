@@ -28,7 +28,7 @@ class CompanyInteractor: CompanyBusinessLogic, CompanyDataStore {
         self.companyService = companyService
     }
     
-    //MARK: - Fetch company
+    //MARK: - Fetch company function
     
     func fetchBackendCompany(request: CompanyModels.Request) {
         fetchCompany(stringURL: Configuration.baseURL) { [weak self] recievedCompany in

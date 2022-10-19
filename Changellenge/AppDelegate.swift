@@ -13,6 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        let userDefaults = UserDefaults.standard
+        let timeNow = Int(Date().timeIntervalSince1970)
+        let cache = URLCache.shared
+        
+        if timeNow - userDefaults.integer(forKey: "cacheTime") > 15 {
+            cache.removeAllCachedResponses()
+        }
+        
         return true
     }
 

@@ -17,6 +17,7 @@ struct DefaultCompanyService: CompanyService {
     
     private let configuration = URLSessionConfiguration.default
     private let cache = URLCache.shared
+    private let usedDefault = UserDefaults.standard
     let companyParser: CompanyParser
     
         
@@ -27,6 +28,7 @@ struct DefaultCompanyService: CompanyService {
             let session = URLSession(configuration: self.configuration)
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
+            request.cachePolicy = .reloadIgnoringLocalCacheData
             
             if let savedData = cache.cachedResponse(for: request)?.data {
                 var result: Result<CompanyInfo?, Error>
@@ -45,6 +47,7 @@ struct DefaultCompanyService: CompanyService {
                     guard let response = recievedResponse else { return }
                     let cacheResponse = CachedURLResponse(response: response, data: data)
                     cache.storeCachedResponse(cacheResponse, for: request)
+                    usedDefault.set(Date().timeIntervalSince1970, forKey: "cacheTime")
                     completion(result)
                 }
             }.resume()
