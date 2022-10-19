@@ -18,7 +18,7 @@ struct DefaultCompanyService: CompanyService {
     private let configuration = URLSessionConfiguration.default
     private let cache = URLCache.shared
     private let usedDefault = UserDefaults.standard
-    let companyParser: CompanyParser
+    private let companyParser: CompanyParser
     
         
     //MARK: - Fetch company
